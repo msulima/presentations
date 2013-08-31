@@ -1,5 +1,5 @@
 
-angular.module('presentations', ['slidesServices', 'tools']).
+angular.module('presentations', ['slidesServices', 'presentationsTools']).
   config(function($routeProvider) {
     $routeProvider.
       when('/showSlide/:slideId', {
@@ -10,19 +10,8 @@ angular.module('presentations', ['slidesServices', 'tools']).
         controller: ViewPresentationController, 
         templateUrl: 'assets/templates/view-presentation.html'}).
       otherwise({redirectTo:'/showSlide/1'});
-  }).directive('captureKeys', function($document, $parse) {
-    return function(scope, element, attrs) {
-      var expression = $parse(attrs['captureKeys']);
-      var f = function(e){
-        scope.$apply(function () {
-          expression(scope, { '$event': event });
-        });
-      }
-      $document.bind('keydown', f);
-      scope.$on('$destroy', function() {
-        $document.unbind('keydown', f)
-      });
-    };
+  }).directive('captureKeys', function(UiTools) {
+      return UiTools.captureKeys;
   });
 
 angular.module('slidesServices', []).
@@ -33,18 +22,3 @@ angular.module('slidesServices', []).
       }
     };
   });
-
-
-angular.module('tools', []).
-  factory('ListTools', function() {
-    return {
-      range: function (start, stop) {
-        var result = []
-        for (var i = start; i <= stop; i++) {
-            result.push(i)
-        }
-        return result;
-      }
-    };
-  });
-  
