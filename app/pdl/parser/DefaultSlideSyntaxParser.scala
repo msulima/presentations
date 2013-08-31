@@ -1,21 +1,15 @@
 package pdl.parser
 
-import scala.util.parsing.combinator.RegexParsers
-import pdl.ast.{ElementTree, ListItem, UnorderedList, Text}
+import pdl.ast.ElementTree
 
-trait DefaultSlideSyntaxParser extends SlideSyntaxParser with RegexParsers {
+trait DefaultSlideSyntaxParser extends SlideSyntaxParser with ParagraphParser with ListParser {
 
-  override def skipWhitespace = false
-  
-  def parseElementTree(text: String) = 
-    parse(elementTreeParser, text).get
+  def parseElementTree(text: String): Seq[ElementTree] =
+    parse(multipleElementTrees, text).get
 
-  private def emptySpace = "[ \t]".r
-  private def text: Parser[Text] = ".*".r ^^ { Text }
-  private def unorderedListBullet = "\\*".r
-  
-  private def unorderedList: Parser[UnorderedList] = unorderedListBullet ~> emptySpace ~> text ^^ (t => UnorderedList(ListItem(t)))
+  private def multipleElementTrees =
+    rep(elementTree)
 
-  private def elementTreeParser: Parser[ElementTree] =
-    unorderedList | text
+  private def elementTree =
+    unorderedList | paragraph
 }

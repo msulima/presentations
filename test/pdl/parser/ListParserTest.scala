@@ -1,6 +1,6 @@
 package pdl.parser
 
-import test.tools.TestBase
+import test.tools.{ParameterisedTest, TestBase}
 import pdl.ast.{Text, ListItem, UnorderedList}
 import scala.util.parsing.input.CharSequenceReader
 
@@ -9,9 +9,7 @@ class ListParserTest extends TestBase with ParameterisedTest[String, UnorderedLi
   behavior of "List Parser"
 
   def run(arg: String) = {
-    val parser = new ListParser {
-      override def skipWhitespace = false
-    }
+    val parser = new ListParser {}
     parser.unorderedList(new CharSequenceReader(arg)).get
   }
 
@@ -24,9 +22,9 @@ class ListParserTest extends TestBase with ParameterisedTest[String, UnorderedLi
   it should "parse multiple list elements" forArgs
     """* first item
       |* second item""".stripMargin -> UnorderedList(
-    ListItem(Text("first item")),
-    ListItem(Text("second item"))
-  )
+      ListItem(Text("first item")),
+      ListItem(Text("second item"))
+    )
 
   it should "parse nested lists elements" forArgs
     """* first item
@@ -38,5 +36,5 @@ class ListParserTest extends TestBase with ParameterisedTest[String, UnorderedLi
         ListItem(Text("second level second item"))
       )),
       ListItem(Text("second item"))
-  )
+    )
 }

@@ -1,6 +1,6 @@
 package pdl.parser
 
-import test.tools.TestBase
+import test.tools.{ParameterisedTest, TestBase}
 import pdl.ast.{Text, UnorderedList, ListItem}
 
 class ListPostProcessorTest extends TestBase with ParameterisedTest[Seq[UnorderedListItem], UnorderedList] {
@@ -58,6 +58,6 @@ class ListPostProcessorTest extends TestBase with ParameterisedTest[Seq[Unordere
     )
 
 
-  def run(arg: Seq[UnorderedListItem]) = 
+  def run(arg: Seq[UnorderedListItem]) =
     new ListPostProcessor {}.convertUnorderedListToAST(arg)
 }

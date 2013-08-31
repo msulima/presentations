@@ -3,24 +3,25 @@ package domain.model
 import akka.actor.Actor
 import play.api.templates.Html
 import pdl.ast._
+import pdl.parser.DefaultSlideSyntaxParser
 
 class Presentation extends Actor {
 
+  val parser = new DefaultSlideSyntaxParser {}
+
   val slide1 = Header("Mateusz Sulima", "Syntactic sugar in Scala")
 
-  val slide2 = Content(List(
-    Text("Cechy Scali:"),
-    UnorderedList(
-      ListItem(Text("Działa pod JVM")),
-      ListItem(Text("Statyczne typowanie")),
-      ListItem(Text("Mieszany paradygmat"), UnorderedList(
-        ListItem(Text("Obiektowy")),
-        ListItem(Text("Funkcyjny"))
-      )),
-      ListItem(Text("Dla zawodowych developerów")),
-      ListItem(Text("Pełna interoperatywność z Javą"))
-    )
-  ), "Mateusz Sulima", "Syntactic sugar in Scala")
+  val slide2 = Content(parser.parseElementTree(
+    """Cechy Scali
+      |
+      |* Działa pod JVM
+      |* Statyczne typowanie
+      |* Mieszany paradygmat
+      |** Obiektowy
+      |** Funkcyjny
+      |* Dla zawodowych developerów
+      |* Pełna interoperatywność z Javą
+    """.stripMargin), "Mateusz Sulima", "Syntactic sugar in Scala")
 
   val slide3 = Content(List(
     Text("Scala może wyglądać jak Java"),

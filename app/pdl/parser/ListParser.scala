@@ -1,11 +1,9 @@
 package pdl.parser
 
 import scala.util.parsing.combinator.RegexParsers
-import pdl.ast.{ListItem, Text, UnorderedList}
+import pdl.ast.{Text, UnorderedList}
 
-trait ListParser extends RegexParsers with ParserCommons with ListPostProcessor {
-
-  private def text: Parser[Text] = ".*".r ^^ Text
+trait ListParser extends RegexParsers with ParagraphParser with ParserCommons with ListPostProcessor {
 
   private def unorderedListBullet = "\\*".r
 
@@ -18,7 +16,7 @@ trait ListParser extends RegexParsers with ParserCommons with ListPostProcessor 
   }
 
   def unorderedList: Parser[UnorderedList] =
-    (listItem *) ^^ (t => convertUnorderedListToAST(t))
+    (listItem +) ^^ (t => convertUnorderedListToAST(t))
 }
 
 case class UnorderedListItem(level: Int, text: Text)

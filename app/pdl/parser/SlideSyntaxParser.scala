@@ -4,5 +4,5 @@ import pdl.ast.ElementTree
 
 trait SlideSyntaxParser {
 
-  def parseElementTree(text: String): ElementTree
+  def parseElementTree(text: String): Seq[ElementTree]
 }
