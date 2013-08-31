@@ -1,0 +1,143 @@
+body {
+    background: black;
+    padding-top: 30px;
+}
+
+.presentationArea-wrapper {
+    text-align: center;
+}
+
+.presentationArea {
+    border: grey solid 1px;
+    position: relative;
+    display: inline-block;
+    text-align: left;
+}
+
+.presentation {
+    background-repeat: no-repeat;
+    color: white;
+    height: 600px;
+    width: 800px;
+    float: left;
+}
+
+.presentation-header-orange {
+    background-image: url('../images/triangle-orange.png'), url('../images/background-header.png');
+    background-position: 701px 540px, top left;
+    background-size: 100px 100px, 800px 600px;
+}
+
+.presentation-header h1 {
+    color: white;
+    position: absolute;
+    right: 30px;
+    text-align: right;
+    top: 333px;
+}
+
+.presentation-header .author {
+    color: orange;
+    font-weight: bold;
+    margin-right: 30px;
+    position: relative;
+    text-align: right;
+    top: 330px;
+}
+
+.presentation-header .date {
+    color: grey;
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    font-size: 10pt;
+}
+
+
+/*** presentation-content */
+
+.presentation-content {
+
+}
+
+.presentation-content-orange {
+    background-image: url('../images/triangle-orange.png'), url('../images/background-content.png');
+    background-position: top right, top left;
+    background-size: 77px 77px, 800px 600px;
+}
+
+.presentation-content-header {
+    float: left;
+    height: 77px;
+    width: 100%;
+}
+
+.presentation-content-header h1 {
+    font-size: large;
+    position: absolute;
+    right: 77px;
+    top: 17px;
+}
+
+.presentation-content-header .author {
+    color: orange;
+    font-weight: bold;
+    position: absolute;
+    text-align: right;
+    top: 5px;
+    font-size: small;
+    right: 80px;
+}
+
+.presentation-content-header .date {
+    color: grey;
+    font-size: smaller;
+    position: absolute;
+    right: 439px;
+    top: 6px;
+}
+
+.presentation-content-body {
+    clear: both;
+    font-size: 150%;
+    padding: 20px;
+    height: 523px;
+}
+
+.presentation-content-body ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.presentation-content-body li { 
+    padding-left: 1em; 
+    text-indent: -.7em;
+}
+
+.presentation-content-orange .presentation-content-body li:before {
+    content: "• ";
+    color: orange;
+}
+
+.presentation-content-orange .presentation-content-body li ul li:before {
+    content: "◦ ";
+    color: orange;
+}
+
+.presentation-content-light .presentation-content-body {
+    background: white;
+    color: black;
+}
+
+
+/*** presentation-content */ 
+
+.presentations-navigation-bar-wrapper {
+    text-align: center;
+}
+
+.presentations-navigation-bar {
+    display: inline-block;
+    max-width: 500px;
+}
