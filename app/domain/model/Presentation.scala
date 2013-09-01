@@ -13,7 +13,6 @@ class Presentation extends Actor {
 
   val slide2 = Content(parser.parseElementTree(
     """Cechy Scali
-      |
       |* Działa pod JVM
       |* Statyczne typowanie
       |* Mieszany paradygmat
@@ -23,46 +22,47 @@ class Presentation extends Actor {
       |* Pełna interoperatywność z Javą
     """.stripMargin), "Mateusz Sulima", "Syntactic sugar in Scala")
 
-  val slide3 = Content(List(
-    Text("Scala może wyglądać jak Java"),
-    Code( """package com.futureprocessing.scala_sugar
-            | 
-            |object StringsScalaLikeJava {
-            |     
-            |    def padStart(string: String, minLength: Int, padChar: Char): String = {
-            |        if (string.length >= minLength) {
-            |            return string
-            |        }
-            |    
-            |        val sb: StringBuilder = new StringBuilder(minLength)
-            |        for (i <- string.length until minLength) {
-            |            sb.append(padChar)
-            |        }
-            |    
-            |        sb.append(string)
-            |        return sb.toString()
-            |    }
-            |}""".stripMargin)
-  ), "Mateusz Sulima", "Syntactic sugar in Scala")
+  val slide3 = Content(parser.parseElementTree(
+    """Scala może wyglądać jak Java
+      |{code}
+      |package com.futureprocessing.scala_sugar
+      | 
+      |object StringsScalaLikeJava {
+      |     
+      |    def padStart(string: String, minLength: Int, padChar: Char): String = {
+      |        if (string.length >= minLength) {
+      |            return string
+      |        }
+      |    
+      |        val sb: StringBuilder = new StringBuilder(minLength)
+      |        for (i <- string.length until minLength) {
+      |            sb.append(padChar)
+      |        }
+      |    
+      |        sb.append(string)
+      |        return sb.toString()
+      |    }
+      |}
+      |{code}""".stripMargin), "Mateusz Sulima", "Syntactic sugar in Scala")
 
-  val slide4 = Content(List(
-    Text("Scala może wyglądać jak Scala"),
-    Code( """package com.futureprocessing.scala_sugar
-            |  
-            |object StringsScala {
-            | 
-            |    def padStart(string: String, minLength: Int, padChar: Char) =
-            |        padChar.toString * (minLength - string.length) + string
-            |}""".stripMargin)
-
-  ), "Mateusz Sulima", "Syntactic sugar in Scala")
+  val slide4 = Content(parser.parseElementTree(
+    """Scala może wyglądać jak Scala
+      |{code}
+      |package com.futureprocessing.scala_sugar
+      |  
+      |object StringsScala {
+      | 
+      |    def padStart(string: String, minLength: Int, padChar: Char) =
+      |        padChar.toString * (minLength - string.length) + string
+      |}
+      |{code}
+    """.stripMargin), "Mateusz Sulima", "Syntactic sugar in Scala")
 
   val slideParser = new SlideParser {}
 
   val slides: Seq[Html] = {
     Seq(slideParser(slide1), slideParser(slide2), slideParser(slide3), slideParser(slide4))
   }
-
 
   def receive = {
     case GetSlide(number) =>

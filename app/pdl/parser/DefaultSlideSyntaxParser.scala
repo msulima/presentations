@@ -2,7 +2,8 @@ package pdl.parser
 
 import pdl.ast.ElementTree
 
-trait DefaultSlideSyntaxParser extends SlideSyntaxParser with ParagraphParser with ListParser {
+trait DefaultSlideSyntaxParser extends SlideSyntaxParser 
+  with ParagraphParser with ListParser with CodeParser {
 
   def parseElementTree(text: String): Seq[ElementTree] =
     parse(multipleElementTrees, text).get
@@ -11,5 +12,5 @@ trait DefaultSlideSyntaxParser extends SlideSyntaxParser with ParagraphParser wi
     rep(elementTree)
 
   private def elementTree =
-    unorderedList | paragraph
+    unorderedList | code | textLine
 }

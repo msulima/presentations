@@ -15,9 +15,9 @@ trait SlideParser {
   }
 
   private def parseElementTree(body: ElementTree): Html = body match {
-    case Paragraph(text) => Html("<p>") += parseElementTree(text) += Html("</p>")
+    case Paragraph(elements@_*) => Html("<p>") += mapAndJoinHtml(elements, parseElementTree) += Html("</p>")
     case Text(text) => Html(text)
-    case Code(text) => code(text)
+    case Code(lines) => code(lines.map(_.text).mkString("\n"))
     case UnorderedList(elements@_*) => Html("<ul>") += mapAndJoinHtml(elements, parseUnorderedList) += Html("</ul>")
   }
 
