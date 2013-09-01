@@ -47,6 +47,7 @@ class Presentation extends Actor {
 
   val slide4 = Content(parser.parseElementTree(
     """Scala może wyglądać jak Scala
+      |Oto dowód:
       |{code}
       |package com.futureprocessing.scala_sugar
       |  

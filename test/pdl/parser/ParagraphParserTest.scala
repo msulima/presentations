@@ -16,13 +16,4 @@ class ParagraphParserTest extends TestBase with ParameterisedTest[String, Elemen
   it should "change simple text to text node" forArgs
     "text" -> Paragraph(Text("text"))
 
-  it should "change multi line text to paragraph node" forArgs
-    """first line
-      |second line""".stripMargin -> Paragraph(Text("first line"), Text("second line"))
-
-  it should "ignore empty line at end of multi line text" forArgs
-    """first line
-      |second line
-      |
-    """.stripMargin -> Paragraph(Text("first line"), Text("second line"))
 }

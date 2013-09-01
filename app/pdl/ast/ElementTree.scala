@@ -2,7 +2,7 @@ package pdl.ast
 
 sealed trait ElementTree
 
-case class Paragraph(elements: ElementTree*) extends ElementTree
+case class Paragraph(text: Text) extends ElementTree
 
 case class Text(text: String) extends ElementTree
 

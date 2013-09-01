@@ -9,7 +9,5 @@ trait ParagraphParser extends RegexParsers with ParserCommons {
 
   def textLine = ".+".r  <~ (newline ?) ^^ Text
 
-  def multiLineText = (text <~ (newline ?)).+ <~ (newline ?)
-
-  def paragraph: Parser[Paragraph] = multiLineText ^^ (p => Paragraph(p: _*))
+  def paragraph = textLine ^^ Paragraph
 }

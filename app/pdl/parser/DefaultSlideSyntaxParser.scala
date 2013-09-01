@@ -12,5 +12,5 @@ trait DefaultSlideSyntaxParser extends SlideSyntaxParser
     rep(elementTree)
 
   private def elementTree =
-    unorderedList | code | textLine
+    unorderedList | code | paragraph
 }

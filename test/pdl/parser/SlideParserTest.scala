@@ -19,18 +19,20 @@ class SlideParserTest extends TestBase with ParameterisedTest[String, Seq[Elemen
     "" -> List()
 
   it should "change simple text to text node" forArgs
-    "text" -> List(Text("text"))
+    "text" -> List(Paragraph(Text("text")))
 
   it should "change single list element to unordered list node" forArgs
     "* list element" -> List(UnorderedList(ListItem(Text("list element"))))
 
   it should "change elements of multiple types" forArgs
-    """text
+    """first paragraph
+      |second paragraph
       |* list element
       |{code}
       |code element
       |{code}""".stripMargin -> List(
-      Text("text"),
+      Paragraph(Text("first paragraph")),
+      Paragraph(Text("second paragraph")),
       UnorderedList(ListItem(Text("list element"))),
       Code(Text("code element"))
     )
