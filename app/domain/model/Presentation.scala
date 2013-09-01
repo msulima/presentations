@@ -4,6 +4,7 @@ import akka.actor.Actor
 import play.api.templates.Html
 import pdl.ast._
 import pdl.parser.DefaultSlideSyntaxParser
+import pdl.generators.html.HtmlGenerator
 
 class Presentation extends Actor {
 
@@ -59,7 +60,7 @@ class Presentation extends Actor {
       |{code}
     """.stripMargin), "Mateusz Sulima", "Syntactic sugar in Scala")
 
-  val slideParser = new SlideParser {}
+  val slideParser = new HtmlGenerator {}
 
   val slides: Seq[Html] = {
     Seq(slideParser(slide1), slideParser(slide2), slideParser(slide3), slideParser(slide4))
