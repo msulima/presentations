@@ -1,11 +1,11 @@
 package domain.model
 
 import play.twirl.api.Html
-import domain.model.Slide.SlideId
+import domain.model.RenderedSlide.SlideId
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
 
-object Slide {
+object RenderedSlide {
 
   type SlideId = String
 
@@ -13,12 +13,12 @@ object Slide {
     override def writes(o: Html): JsValue = JsString(o.toString())
   }
 
-  implicit val writes: Writes[Slide] = (
+  implicit val writes: Writes[RenderedSlide] = (
     (JsPath \ "slideId").write[SlideId] and
-      (JsPath \ "slide").write[Html] and
+      (JsPath \ "content").write[Html] and
       (JsPath \ "prev").write[Option[SlideId]] and
       (JsPath \ "next").write[Option[SlideId]]
-    )(unlift(Slide.unapply))
+    )(unlift(RenderedSlide.unapply))
 }
 
-case class Slide(slideId: SlideId, slide: Html, prev: Option[SlideId] = None, next: Option[SlideId] = None)
+case class RenderedSlide(slideId: SlideId, content: Html, prev: Option[SlideId] = None, next: Option[SlideId] = None)

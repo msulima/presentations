@@ -108,6 +108,10 @@ body {
     height: 523px;
 }
 
+.presentation-content-body p:first-child {
+    margin-top: 0;
+}
+
 .presentation-content-body ul {
     list-style: none;
     padding: 0;
@@ -132,6 +136,15 @@ body {
 .presentation-content-light .presentation-content-body {
     background: white;
     color: black;
+}
+
+.presentation-content-body pre {
+    line-height: 2.2ex;
+}
+
+.presentation-content-body code {
+    font-size: 65%;
+    font-family: "Consolas";
 }
 
 

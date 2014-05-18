@@ -14,3 +14,5 @@ libraryDependencies ++= Seq(
 )
 
 libraryDependencies += "org.scalatest" %% "scalatest" % "2.1.6" % "test " withSources()
+
+libraryDependencies += "org.pegdown" % "pegdown" % "1.4.2"

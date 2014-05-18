@@ -33,7 +33,7 @@ presentationsApp.controller('SlideController', ['$scope', '$document', '$locatio
   var swipeElement = ".presentationArea-wrapper";
   console.log(i);
 
-  $scope.content = $sce.trustAsHtml(slide.data.slide);
+  $scope.content = $sce.trustAsHtml(slide.data.content);
 
   $(function () {
     $(swipeElement).on("swipeleft", function (event) {

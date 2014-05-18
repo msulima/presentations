@@ -3,7 +3,7 @@ package domain.model
 import akka.actor._
 import domain.model.PresentationActor.{GetSlide, SlideChanged, Register}
 import akka.actor.Terminated
-import domain.model.Slide.SlideId
+import domain.model.RenderedSlide.SlideId
 
 object PresentationActor {
 

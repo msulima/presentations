@@ -9,7 +9,7 @@ import scala.concurrent.duration._
 import akka.util.Timeout
 import scala.concurrent.{Future, ExecutionContext}
 import play.api.libs.json.Json
-import domain.model.Slide.SlideId
+import domain.model.RenderedSlide.SlideId
 import domain.model.PresentationActor.GetSlide
 
 object Application extends Controller {
@@ -28,7 +28,7 @@ object Application extends Controller {
   def slideContent(slideId: SlideId) = Action.async { implicit request =>
     render.async {
       case Accepts.Json() =>
-        (presentationActor ? GetSlide(slideId)).mapTo[Option[Slide]].map {
+        (presentationActor ? GetSlide(slideId)).mapTo[Option[RenderedSlide]].map {
           case Some(result) =>
             Ok(Json.toJson(result))
           case None =>
