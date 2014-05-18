@@ -3,15 +3,14 @@ package controllers
 import play.api.mvc._
 import play.twirl.api.Html
 import play.api.libs.concurrent.Akka
-import akka.actor.Props
 import akka.pattern.ask
-import domain.model.{PresentationActor, PresentationClientActor, GetSlide, Presentation}
+import domain.model._
 import scala.concurrent.duration._
 import akka.util.Timeout
 import scala.concurrent.{Future, ExecutionContext}
-import play.api.libs.iteratee.Concurrent
-import play.api.libs.json.{Json, JsValue}
-import play.api.libs.EventSource
+import play.api.libs.json.Json
+import domain.model.Slide.SlideId
+import domain.model.PresentationActor.GetSlide
 
 object Application extends Controller {
 
@@ -22,25 +21,23 @@ object Application extends Controller {
     Ok(views.html.main("Main page.")(Html("")))
   }
 
-  var presentation = Akka.system.actorOf(Props[Presentation])
+  val presentationActor = Akka.system.actorOf(PresentationActor.props())
 
   implicit val timeout: Timeout = 2.seconds
 
-  val (presentationOut, presentationChannel) = Concurrent.broadcast[JsValue]
-
-  def slideContent(index: Int) = Action.async {
-    val content: Future[Html] = ask(presentation, GetSlide(index)).mapTo[Html]
-    content.map(result => {
-      presentationChannel.push(Json.obj("data" -> result.body))
-      Ok(result)
-    })
+  def slideContent(slideId: SlideId) = Action.async { implicit request =>
+    render.async {
+      case Accepts.Json() =>
+        (presentationActor ? GetSlide(slideId)).mapTo[Option[Slide]].map {
+          case Some(result) =>
+            Ok(Json.toJson(result))
+          case None =>
+            NotFound
+        }
+      case _ =>
+        Future.successful(Ok(views.html.main("Main page.")(Html(""))))
+    }
   }
-
-  def presentationFeed = Action {
-    Ok.stream(presentationOut &> EventSource()).as("text/event-stream")
-  }
-
-  val presentationActor = Akka.system.actorOf(PresentationActor.props())
 
   def socket = WebSocket.acceptWithActor[String, String] { request => out =>
     PresentationClientActor.props(presentationActor, out)

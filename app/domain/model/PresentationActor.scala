@@ -1,21 +1,23 @@
 package domain.model
 
 import akka.actor._
-import domain.model.PresentationActor.{SlideChanged, Register}
+import domain.model.PresentationActor.{GetSlide, SlideChanged, Register}
 import akka.actor.Terminated
-import domain.model.PresentationActor.SlideChanged
+import domain.model.Slide.SlideId
 
 object PresentationActor {
 
   def props() = Props(new PresentationActor)
 
-  case class SlideChanged(slideId: String)
+  case class SlideChanged(slideId: SlideId)
+
+  case class GetSlide(slideId: SlideId)
 
   case object Register
 
 }
 
-class PresentationActor extends Actor with ActorLogging {
+class PresentationActor extends Actor with SlidesDeck with ActorLogging {
 
   var currentSlideId = "title"
   var listeners = Set[ActorRef]()
@@ -29,6 +31,8 @@ class PresentationActor extends Actor with ActorLogging {
     case Terminated(actorRef) =>
       log.info(s"Actor $actorRef terminated")
       listeners -= actorRef
+    case GetSlide(slideId) =>
+      sender() ! slide(slideId)
     case msg@SlideChanged(slideId) =>
       log.info(s"Changing slide to $slideId")
       currentSlideId = slideId

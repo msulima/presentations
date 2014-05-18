@@ -4,9 +4,8 @@
 
 # Home page
 GET     /                           controllers.Application.index
-GET     /presentationFeed           controllers.Application.presentationFeed
 GET     /socket                     controllers.Application.socket
-GET     /slideContent/:index        controllers.Application.slideContent(index: Int)
+GET     /slides/:slideId            controllers.Application.slideContent(slideId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
