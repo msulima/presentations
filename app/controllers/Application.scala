@@ -1,13 +1,12 @@
 package controllers
 
 import play.api.mvc._
-import play.api.templates.Html
+import play.twirl.api.Html
 import play.api.libs.concurrent.Akka
 import akka.actor.Props
 import akka.pattern.ask
-import domain.model.{GetSlide, Presentation}
+import domain.model.{PresentationActor, PresentationClientActor, GetSlide, Presentation}
 import scala.concurrent.duration._
-import controllers.tools.AsyncAction
 import akka.util.Timeout
 import scala.concurrent.{Future, ExecutionContext}
 import play.api.libs.iteratee.Concurrent
@@ -29,7 +28,7 @@ object Application extends Controller {
 
   val (presentationOut, presentationChannel) = Concurrent.broadcast[JsValue]
 
-  def slideContent(index: Int) = AsyncAction {
+  def slideContent(index: Int) = Action.async {
     val content: Future[Html] = ask(presentation, GetSlide(index)).mapTo[Html]
     content.map(result => {
       presentationChannel.push(Json.obj("data" -> result.body))
@@ -39,5 +38,11 @@ object Application extends Controller {
 
   def presentationFeed = Action {
     Ok.stream(presentationOut &> EventSource()).as("text/event-stream")
+  }
+
+  val presentationActor = Akka.system.actorOf(PresentationActor.props())
+
+  def socket = WebSocket.acceptWithActor[String, String] { request => out =>
+    PresentationClientActor.props(presentationActor, out)
   }
 }

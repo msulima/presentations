@@ -1,6 +1,6 @@
 package pdl.generators.html
 
-import play.api.templates.Html
+import play.twirl.api.Html
 import views.html.presentations
 import presentations.slides.templates.elements._
 import pdl.ast._

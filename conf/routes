@@ -5,6 +5,7 @@
 # Home page
 GET     /                           controllers.Application.index
 GET     /presentationFeed           controllers.Application.presentationFeed
+GET     /socket                     controllers.Application.socket
 GET     /slideContent/:index        controllers.Application.slideContent(index: Int)
 
 # Map static resources from the /public folder to the /assets URL path

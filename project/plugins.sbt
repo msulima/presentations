@@ -1,8 +1,5 @@
-// Comment to get more information during initialization
-logLevel := Level.Debug
-
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"
 
-addSbtPlugin("play" % "sbt-plugin" % "2.1.2", "0.12", "2.9.2")
+// The Play plugin
+addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.3.0-RC1")
 
-addSbtPlugin("com.github.mpeltonen" % "sbt-idea" % "1.2.0", "0.12", "2.9.2")

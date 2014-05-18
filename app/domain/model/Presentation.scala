@@ -1,7 +1,7 @@
 package domain.model
 
 import akka.actor.Actor
-import play.api.templates.Html
+import play.twirl.api.Html
 import pdl.ast._
 import pdl.parser.DefaultSlideSyntaxParser
 import pdl.generators.html.HtmlGenerator
