@@ -38,10 +38,12 @@ presentationsApp.controller('SlideController', ['$scope', '$document', '$locatio
   $(function () {
     $(swipeElement).on("swipeleft", function (event) {
       i++;
+      $scope.moveNext();
     });
 
     $(swipeElement).on("swiperight", function (event) {
       i++;
+      $scope.movePrevious();
     });
   });
 
@@ -49,7 +51,7 @@ presentationsApp.controller('SlideController', ['$scope', '$document', '$locatio
     console.debug("Got message: ", msg);
 
     if (/slideChanged: (.+)/.test(msg.data)) {
-      //$scope.moveTo(SLIDE_CHANGED.exec(msg.data)[1], true);
+      $scope.moveTo(SLIDE_CHANGED.exec(msg.data)[1], true);
     }
 }
 
