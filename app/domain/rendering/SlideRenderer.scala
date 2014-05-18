@@ -1,6 +1,7 @@
-package domain.model
+package domain.rendering
 
-import domain.model.Slide.SlideId
+import domain.presentations.Presentation
+import domain.presentations.Slide.SlideId
 
 trait SlideRenderer extends HtmlGenerator {
 

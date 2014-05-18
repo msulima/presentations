@@ -1,6 +1,6 @@
-package domain.model
+package domain.presentations
 
-import domain.model.Slide.{Content, Theme}
+import domain.presentations.Slide.{Theme, Content}
 
 case class Presentation(title: String, author: String, slides: Seq[Slide])
 

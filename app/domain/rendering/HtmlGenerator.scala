@@ -1,10 +1,11 @@
-package domain.model
+package domain.rendering
 
 import play.twirl.api.Html
 import views.html.presentations
 import presentations.slides.templates.elements._
 import org.pegdown.PegDownProcessor
 import HtmlGenerator.{Header, Content}
+import domain.presentations.Slide
 
 object HtmlGenerator {
 

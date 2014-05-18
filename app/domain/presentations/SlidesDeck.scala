@@ -1,7 +1,8 @@
-package domain.model
+package domain.presentations
 
+import domain.rendering.{SlideRenderer, RenderedSlide, HtmlGenerator}
 import HtmlGenerator.{Header, Content}
-import domain.model.Slide.SlideId
+import domain.presentations.Slide.SlideId
 
 trait SlidesDeck extends SlideRenderer {
 

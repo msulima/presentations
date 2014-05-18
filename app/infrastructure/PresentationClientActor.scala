@@ -1,7 +1,7 @@
-package domain.model
+package infrastructure
 
 import akka.actor.{ActorLogging, ActorRef, Props, Actor}
-import domain.model.PresentationActor.{Register, SlideChanged}
+import infrastructure.PresentationActor.{SlideChanged, Register}
 
 object PresentationClientActor {
 

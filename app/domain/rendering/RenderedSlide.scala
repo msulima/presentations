@@ -1,13 +1,11 @@
-package domain.model
+package domain.rendering
 
 import play.twirl.api.Html
-import domain.model.RenderedSlide.SlideId
 import play.api.libs.json._
 import play.api.libs.functional.syntax._
+import domain.presentations.Slide.SlideId
 
 object RenderedSlide {
-
-  type SlideId = String
 
   implicit val htmlWrites: Writes[Html] = new Writes[Html] {
     override def writes(o: Html): JsValue = JsString(o.toString())

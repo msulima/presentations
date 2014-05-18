@@ -1,9 +1,10 @@
-package domain.model
+package infrastructure
 
 import akka.actor._
-import domain.model.PresentationActor.{GetSlide, SlideChanged, Register}
 import akka.actor.Terminated
-import domain.model.RenderedSlide.SlideId
+import domain.presentations.SlidesDeck
+import infrastructure.PresentationActor.{Register, SlideChanged, GetSlide}
+import domain.presentations.Slide.SlideId
 
 object PresentationActor {
 

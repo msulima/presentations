@@ -1,18 +1,18 @@
-package controllers
+package infrastructure
 
 import play.api.mvc._
 import play.twirl.api.Html
 import play.api.libs.concurrent.Akka
 import akka.pattern.ask
-import domain.model._
 import scala.concurrent.duration._
 import akka.util.Timeout
 import scala.concurrent.{Future, ExecutionContext}
 import play.api.libs.json.Json
-import domain.model.RenderedSlide.SlideId
-import domain.model.PresentationActor.GetSlide
+import domain.rendering.RenderedSlide
+import domain.presentations.Slide.SlideId
+import infrastructure.PresentationActor.GetSlide
 
-object Application extends Controller {
+object ApplicationController extends Controller {
 
   import play.api.Play.current
   import ExecutionContext.Implicits.global
