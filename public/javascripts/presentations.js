@@ -1,7 +1,8 @@
 var socket = new WebSocket("ws://localhost:9000/socket");
 
 var presentationsApp = angular.module('presentationsApp', [
-  'ngRoute'
+  'ngRoute',
+  'ngTouch'
 ]);
 
 presentationsApp.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
@@ -30,39 +31,30 @@ presentationsApp.controller('SlideController', ['$scope', '$document', '$locatio
   var LEFT = 37;
   var RIGHT = 39;
   var SLIDE_CHANGED = /slideChanged: (.+)/;
-  var swipeElement = ".presentationArea-wrapper";
   console.log(i);
 
   $scope.content = $sce.trustAsHtml(slide.data.content);
-
-  $(function () {
-    $(swipeElement).on("swipeleft", function (event) {
-      i++;
-      $scope.moveNext();
-    });
-
-    $(swipeElement).on("swiperight", function (event) {
-      i++;
-      $scope.movePrevious();
-    });
-  });
 
   socket.onmessage = function(msg) {
     console.debug("Got message: ", msg);
 
     if (/slideChanged: (.+)/.test(msg.data)) {
-      $scope.moveTo(SLIDE_CHANGED.exec(msg.data)[1], true);
+      $scope.$apply(function () {
+        $scope.moveTo(SLIDE_CHANGED.exec(msg.data)[1], true);
+      });
     }
 }
 
   var onKeydown = function(event) {
-    if (event.keyCode === LEFT) {
-      $scope.movePrevious();
-      event.preventDefault();
-    } else if (event.keyCode === RIGHT) {
-      $scope.moveNext();
-      event.preventDefault();
-    }
+    $scope.$apply(function () {
+      if (event.keyCode === LEFT) {
+        $scope.movePrevious();
+        event.preventDefault();
+      } else if (event.keyCode === RIGHT) {
+        $scope.moveNext();
+        event.preventDefault();
+      }
+    });
   }
 
   $scope.movePrevious = function() {
@@ -78,21 +70,17 @@ presentationsApp.controller('SlideController', ['$scope', '$document', '$locatio
   }
 
   $scope.moveTo = function(slide, ommitWebSocketMessage) {
-    $scope.$apply(function () {
-      if (!(ommitWebSocketMessage === true)) {
-        console.log("sendingMessage: ", "slideChanged: " + slide);
-        socket.send("slideChanged: " + slide);
-      }
-      console.log("location: ", slide);
-      $location.path(slide).url();
-    });
+    if (!(ommitWebSocketMessage === true)) {
+      console.log("sendingMessage: ", "slideChanged: " + slide);
+      socket.send("slideChanged: " + slide);
+    }
+    console.log("location: ", slide);
+    $location.path(slide).url();
   }
 
   $document.bind('keydown', onKeydown);
 
   $scope.$on('$destroy', function() {
-    $(swipeElement).off('swipeleft');
-    $(swipeElement).off('swiperight');
     $document.unbind('keydown');
   });
 }]);
